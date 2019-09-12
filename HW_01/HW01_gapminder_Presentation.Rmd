@@ -1,14 +1,13 @@
 ---
-title: "HW01_gapminder"
+title: "HW01 gapminder Presentation"
 author: "MINSI SUNG"
 date: "12/09/2019"
 output: 
-  html_document:
-    keep md: true
-    toc: true
-    number_sections: true
-    toc_float: false
+  ioslides_presentation:
+   keep_md: true
 ---
+
+
 
 ```{r load, warning=FALSE, echo=FALSE}
 library(gapminder)
@@ -19,37 +18,34 @@ library(ggplot2)
 
 # Explore gapminder 
 
-Let's load the dataset `gapminder` which is available in R. 
-
-### Summary statistics for the dataset:
+## Summary statistics for the dataset:
 ```{r summary, warning=FALSE, echo=FALSE}
 summary(gapminder)
 ```
-The dataset contains ``r nrow(gapminder)`` rows and ``r ncol(gapminder)`` columns.
+## The dataset contains 
+### ``r nrow(gapminder)`` rows and ``r ncol(gapminder)`` columns.
 
 
-All the variables we have:
-```{r names , warning=FALSE, echo=FALSE}
-names(gapminder)
-```
-The number of countries in the dataset is ``r length(unique(gapminder$country))``.
-The number of years in the dataset is ``r length(unique(gapminder$year))``
+### All the variables we have:
+### ``r names(gapminder)[1:3]`` rows and ``r names(gapminder)[4:6]``
 
 
-This is the mean life expectancy over all countries for all years:
-```{r, warning=FALSE, echo=FALSE}
-mean(gapminder$lifeExp, na.rm=T)
-```
+### The number of countries in the dataset is ``r length(unique(gapminder$country))``.
+### The number of years in the dataset is ``r length(unique(gapminder$year))``
 
 
-# Asia
+## 
+### The mean life expectancy over all countries for all years is ``r mean(gapminder$lifeExp, na.rm=T)``.
 
-Now let's check the `gapminder` data for Asia.
+
+## Asia
+
+### Now let's check the `gapminder` data for Asia.
 ```{r , warning=FALSE, echo=FALSE}
 plot(gapminder$year[gapminder$continent=="Asia"], gapminder$lifeExp[gapminder$continent=="Asia"], ylab = "life expectancy", xlab = "Year", main="Life expectancy in Asia by year")
 ```
 
-### Summary statistics for Asia:
+## Summary statistics for Asia:
 
 * population:
 ```{r , warning=FALSE, echo=FALSE}
@@ -64,3 +60,4 @@ summary(gapminder$lifeExp[gapminder$continent=="Asia"])
 ```{r , warning=FALSE, echo=FALSE}
 summary(gapminder$gdpPercap[gapminder$continent=="Asia"])
 ```
+
