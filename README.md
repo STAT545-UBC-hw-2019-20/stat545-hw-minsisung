@@ -14,6 +14,9 @@ This repository is used to submit the [Assignment](https://stat545.stat.ubc.ca/e
  - Data visualization
  - How to write functions and work with R in a functional style
  - Version control with Git; collaboration via GitHub
+ 
+ ![]( https://media.giphy.com/media/SiEF80pqzJHhM3dOw0/giphy.gif)
+
 
 #### *Assignments*
 **Assignments**|**Assignment Due Date**
