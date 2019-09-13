@@ -41,18 +41,38 @@ output:
 ### `country, continent, year` rows and `lifeExp, pop, gdpPercap`
 
 
-### The number of countries in the dataset is `142`.
+### The number of unique countries in the dataset is `142`.
 ### The number of years in the dataset is `12`
 
 
 ## 
 ### The mean life expectancy over all countries for all years is `59.4744394`.
+### The highest life expectancy in all the countries is `Japan`.
 
+### The mean population over all countries for all years is `2.9601212\times 10^{7}`.
+### The highest life expectancy in all the countries is `China`.
+
+### The mean GDP per capita over all countries for all years is `7215.3270812`.
+### The highest GDP per capita in all the countries is `Kuwait`.
 
 ## Asia
 
 ### Now let's check the `gapminder` data for Asia.
 ![](HW01_gapminder_Presentation_files/figure-html/unnamed-chunk-1-1.png)<!-- -->
+
+##
+![](HW01_gapminder_Presentation_files/figure-html/unnamed-chunk-2-1.png)<!-- -->
+
+##
+![](HW01_gapminder_Presentation_files/figure-html/unnamed-chunk-3-1.png)<!-- -->
+
+##
+### The highest life expectancy in Asia is `Japan`.
+
+### The highest population in Asia is `China`.
+
+### The highest GDP per capita in Asia is `Kuwait`.
+
 
 ## Summary statistics for Asia:
 
@@ -75,4 +95,3 @@ output:
 ##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
 ##     331    1057    2647    7902    8549  113523
 ```
-
