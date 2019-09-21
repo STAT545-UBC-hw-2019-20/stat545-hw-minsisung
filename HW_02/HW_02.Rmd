@@ -39,7 +39,7 @@ gapminder %>%
       filter(country == 'Japan' | country == 'Taiwan' | country == 'Germany') %>% 
         select(country,gdpPercap)
 ```
-### !!!!!1.3 Filter gapminder to all entries that have experienced a drop in life expectancy. Be sure to include a new variable that’s the increase in life expectancy in your tibble. Hint: you might find the lag() or diff() functions useful.
+### 1.3 Filter gapminder to all entries that have experienced a drop in life expectancy. Be sure to include a new variable that’s the increase in life expectancy in your tibble. Hint: you might find the lag() or diff() functions useful.
 ```{r, warning=FALSE, echo=FALSE}
 gapminder %>% 
   group_by(country) %>% 
@@ -66,8 +66,37 @@ ggplot(gapminder %>%
 ## Exercise 2:Explore individual variables with dplyr
 Pick one categorical variable and one quantitative variable to explore. Answer the following questions in whichever way you think is appropriate, using dplyr:
 
+The categorical variable I picked is `Continent`
+The quantitative variable I would like to explore is `gdpPercap`
+
+
+
 * What are possible values (or range, whichever is appropriate) of each variable?
+
+The possible varlues of the categorical `continent` is:
+```{r, warning=FALSE, echo=FALSE}
+gapminder %>% 
+  select(continent) %>% 
+  distinct(continent)
+```
+
+The range of the quantitive variable `gdpPercap` is:
+
+```{r, warning=FALSE, echo=FALSE}
+gapminder %>% 
+select(gdpPercap) %>% 
+range()
+```
+From 241.1659 to 113523.1329 is the range of gdpPercap
+
+
 * What values are typical? What’s the spread? What’s the distribution? Etc., tailored to the variable at hand.
+
+
+```
+
+
+
 * Feel free to use summary stats, tables, figures.
 
 

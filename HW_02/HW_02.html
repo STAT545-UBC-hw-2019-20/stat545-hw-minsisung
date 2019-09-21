@@ -412,7 +412,7 @@ library(tidyverse)</code></pre>
 ## # ... with 26 more rows</code></pre>
 </div>
 <div id="filter-gapminder-to-all-entries-that-have-experienced-a-drop-in-life-expectancy.-be-sure-to-include-a-new-variable-thats-the-increase-in-life-expectancy-in-your-tibble.-hint-you-might-find-the-lag-or-diff-functions-useful." class="section level3">
-<h3>!!!!!1.3 Filter gapminder to all entries that have experienced a drop in life expectancy. Be sure to include a new variable that’s the increase in life expectancy in your tibble. Hint: you might find the lag() or diff() functions useful.</h3>
+<h3>1.3 Filter gapminder to all entries that have experienced a drop in life expectancy. Be sure to include a new variable that’s the increase in life expectancy in your tibble. Hint: you might find the lag() or diff() functions useful.</h3>
 <pre><code>## # A tibble: 102 x 7
 ## # Groups:   country [52]
 ##    country         continent  year lifeExp       pop gdpPercap difference
@@ -454,19 +454,40 @@ library(tidyverse)</code></pre>
 <div id="exercise-2explore-individual-variables-with-dplyr" class="section level2">
 <h2>Exercise 2:Explore individual variables with dplyr</h2>
 <p>Pick one categorical variable and one quantitative variable to explore. Answer the following questions in whichever way you think is appropriate, using dplyr:</p>
+<p>The categorical variable I picked is <code>Continent</code> The quantitative variable I would like to explore is <code>gdpPercap</code></p>
 <ul>
 <li>What are possible values (or range, whichever is appropriate) of each variable?</li>
-<li>What values are typical? What’s the spread? What’s the distribution? Etc., tailored to the variable at hand.</li>
-<li>Feel free to use summary stats, tables, figures.</li>
 </ul>
-</div>
-<div id="exercise-3-explore-various-plot-types" class="section level2">
-<h2>Exercise 3: Explore various plot types</h2>
-<p>Make two plots that have some value to them. That is, plots that someone might actually consider making for an analysis. Just don’t make the same plots we made in class – feel free to use a data set from the datasets R package if you wish.</p>
-<ol style="list-style-type: decimal">
-<li>A scatterplot of two quantitative variables.</li>
-</ol>
-<pre class="r"><code>ggplot(gapminder %&gt;% 
+<p>The possible varlues of the categorical <code>continent</code> is:</p>
+<pre><code>## # A tibble: 5 x 1
+##   continent
+##   &lt;fct&gt;    
+## 1 Asia     
+## 2 Europe   
+## 3 Africa   
+## 4 Americas 
+## 5 Oceania</code></pre>
+<p>The range of the quantitive variable <code>gdpPercap</code> is:</p>
+<pre><code>## [1]    241.1659 113523.1329</code></pre>
+<p>From 241.1659 to 113523.1329 is the range of gdpPercap</p>
+<ul>
+<li>What values are typical? What’s the spread? What’s the distribution? Etc., tailored to the variable at hand.</li>
+</ul>
+<pre><code>
+
+
+* Feel free to use summary stats, tables, figures.
+
+
+
+
+## Exercise 3: Explore various plot types 
+Make two plots that have some value to them. That is, plots that someone might actually consider making for an analysis. Just don’t make the same plots we made in class – feel free to use a data set from the datasets R package if you wish.
+
+1. A scatterplot of two quantitative variables.
+
+```r
+ggplot(gapminder %&gt;% 
          filter(country == &#39;Taiwan&#39;), aes(lifeExp, pop)) +
   geom_point()</code></pre>
 <p><img src="data:image/png;base64,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" /><!-- --></p>
