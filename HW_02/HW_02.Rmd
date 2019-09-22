@@ -142,7 +142,7 @@ filter(country == "Rwanda" |country ==  "Afghanistan")
 
 ```
 
-From the comparison above we can see that they did NOT succeed to get all the data of Rwanda and Afghanistan. It's because 
+From the comparison above we can see that they did NOT succeed to get all the data of Rwanda and Afghanistan. It's because first one only list out the data which 'country == c("Rwanda", "Afghanistan")'. The correct one lists out all the data which country equal to Rwanda or Afghanistan.
 
 ## Tibble display (Optional) (extra 1%)
 Present numerical tables in a more attractive form using `knitr::kable()` for small tibbles (say, up to 10 rows),
