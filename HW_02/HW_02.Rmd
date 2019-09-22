@@ -132,6 +132,8 @@ For people who want to take things further.
 Evaluate this code and describe the result. Presumably the analyst’s intent was to get the data for Rwanda and Afghanistan. Did they succeed? Why or why not? If not, what is the correct way to do this?
 
 ```{r}
+
+
 filter(gapminder, country == c("Rwanda", "Afghanistan"))
 
 ```
