@@ -157,7 +157,6 @@ and `DT::datatable()` for larger tibbles.
 ```{r }
 gapminder %>%
   filter(country=="Taiwan") %>% 
-    top_n(10) %>% 
   DT::datatable()
 ```
 
