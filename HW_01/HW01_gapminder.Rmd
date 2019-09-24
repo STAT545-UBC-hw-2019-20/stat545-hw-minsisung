@@ -9,7 +9,7 @@ output:
     keep_md: yes
     number_sections: yes
     toc: yes
-    toc_float: no
+    toc_float: yes
 ---
 
 ```{r load, warning=FALSE, echo=FALSE}
