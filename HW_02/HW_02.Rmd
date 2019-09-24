@@ -4,11 +4,10 @@ author: "MINSI SUNG"
 date: "21/09/2019"
 output:
   html_document:
-    keep_md: true
-    toc: true
-    number_sections: true
-    toc_float: true
-
+    keep_md: yes
+    number_sections: yes
+    toc: yes
+    toc_float: yes
 ---
     
 ```{r load, warning=FALSE,echo=FALSE}
@@ -151,7 +150,7 @@ Present numerical tables in a more attractive form using `knitr::kable()` for sm
 
 ```{r }
 gapminder %>%
-  filter(country=="Taiwan") %>% 
+  filter(country == "Rwanda" |country ==  "Afghanistan") %>% 
   top_n(10) %>% 
   knitr::kable()
 ```
@@ -160,7 +159,7 @@ and `DT::datatable()` for larger tibbles.
 
 ```{r }
 gapminder %>%
-  filter(country=="Taiwan") %>% 
+  filter(country == "Rwanda" |country ==  "Afghanistan") %>% 
   DT::datatable()
 ```
 
