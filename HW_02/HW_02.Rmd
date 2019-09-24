@@ -2,23 +2,15 @@
 title: "HW_02"
 author: "MINSI SUNG"
 date: "21/09/2019"
-output: 
+output:
   html_document:
-    keep_md: true
-editor_options: 
-  chunk_output_type: inline
+    df_print: paged
 ---
-
-<!---The following chunk allows errors when knitting--->
-
-```{r allow errors, echo = FALSE}
-knitr::opts_chunk$set(error = TRUE)
-```
     
-```{r load packages, warning = FALSE, message = FALSE}
-# load your packages here:
-library(gapminder)
-library(tidyverse)
+```{r load, warning=FALSE,echo=FALSE}
+suppressPackageStartupMessages(library(tidyverse)) 
+suppressPackageStartupMessages(library(gapminder))
+suppressPackageStartupMessages(library(datasets))
 ```
     
 
@@ -72,7 +64,7 @@ The quantitative variable I would like to explore is `gdpPercap`
 
 
 
-* What are possible values (or range, whichever is appropriate) of each variable?
+###  What are possible values (or range, whichever is appropriate) of each variable?
 
 The possible varlues of the categorical `continent` is:
 ```{r, warning=FALSE, echo=FALSE}
@@ -81,29 +73,34 @@ gapminder %>%
   distinct(continent)
 ```
 
-The range of the quantitive variable `gdpPercap` is:
+
+### What values are typical? What’s the spread? What’s the distribution? Etc., tailored to the variable at hand.
 
 ```{r, warning=FALSE, echo=FALSE}
 gapminder %>% 
-select(gdpPercap) %>% 
-range()
+  group_by(continent) %>% #This tells you the possible values for continent
+ summarize(min(gdpPercap) # The minimum gdpPercap by each continent
+           ,max(gdpPercap) # The maximum  (max - min = range)
+           ,mean(gdpPercap) #The mean gdpPercap which means typical
+           ,sd(gdpPercap)) #The standard deviation of the gdpPercap which can be a measure of spread
+
 ```
-From 241.1659 to 113523.1329 is the range of gdpPercap
 
 
-* What values are typical? What’s the spread? What’s the distribution? Etc., tailored to the variable at hand.
-
-
-
-* Feel free to use summary stats, tables, figures.
-
-
+The distribution of the gdpPercap of each continent
+```{r, warning=FALSE, echo=FALSE}
+gapminder %>% 
+  ggplot(aes(x=log(gdpPercap)))+ 
+  geom_density()+ #Plot density
+    facet_wrap(~continent) #plot the density side by side
+```
 
 
 # Exercise 3: Explore various plot types 
 Make two plots that have some value to them. That is, plots that someone might actually consider making for an analysis. Just don’t make the same plots we made in class – feel free to use a data set from the datasets R package if you wish.
 
-1. A scatterplot of two quantitative variables.
+### 1. A scatterplot of two quantitative variables.
+
 ```{r, warning=FALSE, echo=FALSE}
 gapminder %>%
   filter(country=='Taiwan') %>% 
@@ -114,7 +111,7 @@ gapminder %>%
              x="Life Expectancy", y="GDP per capita")
 ```
 
-2. One other plot besides a scatterplot.
+### 2. One other plot besides a scatterplot.
 
 ```{r, warning=FALSE, echo=FALSE}
 gapminder %>% 
@@ -132,7 +129,6 @@ For people who want to take things further.
 Evaluate this code and describe the result. Presumably the analyst’s intent was to get the data for Rwanda and Afghanistan. Did they succeed? Why or why not? If not, what is the correct way to do this?
 
 ```{r}
-
 
 filter(gapminder, country == c("Rwanda", "Afghanistan"))
 
