@@ -20,7 +20,7 @@ This repository is used to submit the [Assignment](https://stat545.stat.ubc.ca/e
 
 #### *Assignments*
 **Assignments**|**Assignment Due Date**
----------|-----------------|
+---------|-----------------
 [Assignment 01](https://stat545.stat.ubc.ca/evaluation/hw01/hw01/)|September 17, 2019
 [Assignment 02](https://stat545.stat.ubc.ca/evaluation/hw02/hw02/)|September 24, 2019
 [Assignment 03](https://stat545.stat.ubc.ca/evaluation/hw03/hw03/)|October 01, 2019

@@ -1,0 +1,15 @@
+---
+title: "HW_03"
+author: "MINSI SUNG"
+date: "26/09/2019"
+  html_document:
+    keep_md: yes
+    number_sections: yes
+    toc: yes
+    toc_float: yes
+---
+```{r load, warning=FALSE,echo=FALSE}
+suppressPackageStartupMessages(library(tidyverse)) 
+suppressPackageStartupMessages(library(gapminder))
+```
+
