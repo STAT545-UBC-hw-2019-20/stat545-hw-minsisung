@@ -24,7 +24,7 @@ suppressPackageStartupMessages(library(knitr))
 ```{r}
 gapminder %>% 
   group_by(continent) %>% 
-summarize(max_gdpPercap = max(gdpPercap), min_gdpPercap = min(gdpPercap))%>% 
+summarize(max_gdpPercap = max(gdpPercap),`Max Country` = country[gdpPercap==`max_gdpPercap`], min_gdpPercap = min(gdpPercap),`min Country` = country[gdpPercap==`min_gdpPercap`])%>% 
   knitr::kable()
 ```
 
