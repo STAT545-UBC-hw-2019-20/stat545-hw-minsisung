@@ -11,9 +11,11 @@ output:
 ---
     
 ```{r load, warning=FALSE,echo=FALSE}
-suppressPackageStartupMessages(library(tidyverse)) 
 suppressPackageStartupMessages(library(gapminder))
-suppressPackageStartupMessages(library(datasets))
+suppressPackageStartupMessages(library(tidyverse))  # included package 'dplyr'
+suppressPackageStartupMessages(library(tsibble))
+suppressPackageStartupMessages(library(knitr))  # tidy tables
+suppressPackageStartupMessages(library(DT))  # tidy dataframe tables for HTML
 ```
     
 
@@ -53,7 +55,8 @@ gapminder %>%
 ### 1.5 Produce a scatterplot of Canada’s life expectancy vs. GDP per capita using ggplot2, without defining a new variable. That is, after filtering the gapminder data set, pipe it directly into the ggplot() function. Ensure GDP per capita is on a log scale.
 ```{r, warning=FALSE, echo=FALSE}
 ggplot(gapminder %>% 
-         filter(country == 'Canada'), aes(lifeExp, log(gdpPercap))) +
+         filter(country == 'Canada'), aes(lifeExp, gdpPercap)) +
+  scale_y_log10("GDP per capita", labels = scales::dollar_format())+
   geom_point()+
   labs(x="Life Expectancy", y="GDP per capita (Log)")
 ```

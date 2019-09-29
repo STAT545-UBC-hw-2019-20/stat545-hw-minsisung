@@ -16,20 +16,22 @@ knitr::opts_chunk$set(echo = TRUE)
 ```{r , warning=FALSE,echo=FALSE}
 suppressPackageStartupMessages(library(tidyverse)) 
 suppressPackageStartupMessages(library(gapminder))
+suppressPackageStartupMessages(library(knitr))
 ```
 
 # Task Option 2
 ### Get the maximum and minimum of GDP per capita for all continents.
-```{r, warning=FALSE, echo=FALSE}
+```{r}
 gapminder %>% 
   group_by(continent) %>% 
-summarize(max_gdpPercap = max(gdpPercap), min_gdpPercap = min(gdpPercap) )
+summarize(max_gdpPercap = max(gdpPercap), min_gdpPercap = min(gdpPercap))%>% 
+  knitr::kable()
 ```
 
 
 # Task Option 3
 ### Look at the spread of GDP per capita within the continents.
-```{r, warning=FALSE,echo=FALSE}
+```{r}
   ggplot(gapminder, aes(continent, gdpPercap,color = continent)) +
   geom_point(alpha = 0.1) +
   scale_y_log10(labels = scales::comma_format())
@@ -42,7 +44,7 @@ summarize(max_gdpPercap = max(gdpPercap), min_gdpPercap = min(gdpPercap) )
 
 Since there are lots of lifeExp data in each continent, we need to get the mean of the lifeExp for each continent and plot its changing over time.
 
-```{r, warning=FALSE,echo=FALSE}
+```{r}
 gapminder %>% 
   group_by(year, continent) %>% 
   summarize(mean_lifeExp = mean(lifeExp)) %>% 
