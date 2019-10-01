@@ -18,31 +18,58 @@ suppressPackageStartupMessages(library(tidyverse))
 suppressPackageStartupMessages(library(gapminder))
 suppressPackageStartupMessages(library(knitr))
 ```
+# Pick three of the six tasks below, and produce:
+
+ * a tibble, using dplyr as your data manipulation tool;
+ * an accompanying plot of data from the tibble, using ggplot2 as your visualization tool; and 
+ * some dialogue about what your tables/figures show (doesn’t have to be much).
+
+### For this assignment, I chose option 2,3 and 5 for the requirements
+
+
 
 # Task Option 2
 ### Get the maximum and minimum of GDP per capita for all continents.
+
+So, here I grouped the gapminder by cotinent and used summarize to create four new coloumns with max and min function. Finally used datatable() to make a prettier table.
 ```{r}
 gapminder %>% 
   group_by(continent) %>% 
-summarize(max_gdpPercap = max(gdpPercap),`Max Country` = country[gdpPercap==`max_gdpPercap`], min_gdpPercap = min(gdpPercap),`min Country` = country[gdpPercap==`min_gdpPercap`])%>% 
-  knitr::kable()
+summarize(Max_gdpPercap = max(gdpPercap),`Max Country` = country[gdpPercap==`Max_gdpPercap`], Min_gdpPercap = min(gdpPercap),`Min Country` = country[gdpPercap==`Min_gdpPercap`])%>% 
+  DT::datatable()
 ```
 
 
 # Task Option 3
 ### Look at the spread of GDP per capita within the continents.
-```{r}
-  ggplot(gapminder, aes(continent, gdpPercap,color = continent)) +
-  geom_point(alpha = 0.1) +
-  scale_y_log10(labels = scales::comma_format())
 
+Here, I used the two ways to show the spread of GDP per capita within the continent.
+
+First one used geom_point to plot the GDP per capita of all the countries which are in the same cotinent. Also use the table with differnet colors for each cotinent to fulfill the optional exercise
+```{r}
+  ggplot(gapminder, aes(continent, gdpPercap, color = continent)) +
+  geom_point(alpha = 0.1) +
+  scale_y_log10(labels = scales::comma_format())+ 
+  ggtitle("GDP per capita by continent") 
+
+```
+
+
+
+
+Second way is using histogram to show the spread of GDP per capita within the continents and put into the same plot for comparison.
+
+```{r}
+ggplot(gapminder, aes(gdpPercap)) +
+  geom_histogram(bins = 15)+
+  facet_wrap(~continent, scales = "free_y")
 ```
 
 
 # Task Option 5
 ### How is life expectancy changing over time on different continents?
 
-Since there are lots of lifeExp data in each continent, we need to get the mean of the lifeExp for each continent and plot its changing over time.
+Since there are lots of lifeExp data in each continent, I need to get the mean of the lifeExp for each continent and plot its changing over time.
 
 ```{r}
 gapminder %>% 
@@ -52,3 +79,9 @@ gapminder %>%
   geom_line()
 ```
 
+
+
+# Optional Exercise
+
+### Get table and figure side-by-side.
+I used it in the option 3.
