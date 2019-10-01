@@ -2719,15 +2719,16 @@ summary {
   group_by(continent) %&gt;% 
 summarize(Max_gdpPercap = max(gdpPercap),`Max Country` = country[gdpPercap==`Max_gdpPercap`], Min_gdpPercap = min(gdpPercap),`Min Country` = country[gdpPercap==`Min_gdpPercap`])%&gt;% 
   DT::datatable()</code></pre>
-<div id="htmlwidget-7f954dec204ab4404dd3" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-7f954dec204ab4404dd3">{"x":{"filter":"none","data":[["1","2","3","4","5"],["Africa","Americas","Asia","Europe","Oceania"],[21951.21176,42951.65309,113523.1329,49357.19017,34435.36744],["Libya","United States","Kuwait","Norway","Australia"],[241.1658765,1201.637154,331,973.5331948,10039.59564],["Congo, Dem. Rep.","Haiti","Myanmar","Bosnia and Herzegovina","Australia"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>continent<\/th>\n      <th>Max_gdpPercap<\/th>\n      <th>Max Country<\/th>\n      <th>Min_gdpPercap<\/th>\n      <th>Min Country<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[2,4]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-08fc24f4baa832a49735" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-08fc24f4baa832a49735">{"x":{"filter":"none","data":[["1","2","3","4","5"],["Africa","Americas","Asia","Europe","Oceania"],[21951.21176,42951.65309,113523.1329,49357.19017,34435.36744],["Libya","United States","Kuwait","Norway","Australia"],[241.1658765,1201.637154,331,973.5331948,10039.59564],["Congo, Dem. Rep.","Haiti","Myanmar","Bosnia and Herzegovina","Australia"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>continent<\/th>\n      <th>Max_gdpPercap<\/th>\n      <th>Max Country<\/th>\n      <th>Min_gdpPercap<\/th>\n      <th>Min Country<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[2,4]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 <div id="task-option-3" class="section level1">
 <h1>Task Option 3</h1>
 <div id="look-at-the-spread-of-gdp-per-capita-within-the-continents." class="section level3">
 <h3>Look at the spread of GDP per capita within the continents.</h3>
-<p>Here, I used the two ways to show the spread of GDP per capita within the continent. First one is using geom_point to plot the GDP per capita of all the countries which are in the same cotinent.</p>
+<p>Here, I used the two ways to show the spread of GDP per capita within the continent.</p>
+<p>First one used geom_point to plot the GDP per capita of all the countries which are in the same cotinent. Also use the table with differnet colors for each cotinent to fulfill the optional exercise</p>
 <pre class="r"><code>  ggplot(gapminder, aes(continent, gdpPercap, color = continent)) +
   geom_point(alpha = 0.1) +
   scale_y_log10(labels = scales::comma_format())+ 
