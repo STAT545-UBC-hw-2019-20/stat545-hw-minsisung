@@ -32,25 +32,53 @@ suppressPackageStartupMessages(library(knitr))
 ### Get the maximum and minimum of GDP per capita for all continents.
 
 So, here I grouped the gapminder by cotinent and used summarize to create four new coloumns with max and min function. Finally used datatable() to make a prettier table.
+
 ```{r}
-gapminder %>% 
+Option2 = gapminder %>% 
   group_by(continent) %>% 
-summarize(Max_gdpPercap = max(gdpPercap),`Max Country` = country[gdpPercap==`Max_gdpPercap`], Min_gdpPercap = min(gdpPercap),`Min Country` = country[gdpPercap==`Min_gdpPercap`])%>% 
-  DT::datatable()
+  summarize(Max_gdpPercap = max(gdpPercap),`Max Country` = country[gdpPercap==`Max_gdpPercap`], Min_gdpPercap = min(gdpPercap),`Min Country` = country[gdpPercap==`Min_gdpPercap`])
+
+DT::datatable(Option2)
 ```
+
+Used the table above and filter out the max and min country to create a column plot.
+
+```{r}
+Option2 %>%
+    select(continent,Max_gdpPercap,Min_gdpPercap) %>% 
+    gather(var, gdp, -continent)%>%
+    ggplot(aes(x = continent, y = gdp, fill = var)) +
+    geom_col(position = position_dodge()) +
+    xlab('Continent')+
+    ylab('GDP')
+```
+
+
 
 
 # Task Option 3
 ### Look at the spread of GDP per capita within the continents.
 
-Here, I used the two ways to show the spread of GDP per capita within the continent.
+For the table I just select continent and gdpercap and group by the cotninent. 
 
-First one used geom_point to plot the GDP per capita of all the countries which are in the same cotinent. Also use the table with differnet colors for each cotinent to fulfill the optional exercise
 ```{r}
-  ggplot(gapminder, aes(continent, gdpPercap, color = continent)) +
-  geom_point(alpha = 0.1) +
+Option3 <- gapminder %>% 
+  group_by(continent) %>% 
+  select(continent,gdpPercap)
+Option3
+```
+
+Then I used the two ways to show the spread of GDP per capita within the continent.
+
+First one used geom_boxplot to plot the GDP per capita of all the countries which are in the same cotinent. Also use the table with differnet colors for each cotinent to fulfill the optional exercise
+
+
+```{r}
+Option3 %>% 
+  ggplot(aes(continent, gdpPercap, color = continent)) +
+  geom_boxplot() +
   scale_y_log10(labels = scales::comma_format())+ 
-  ggtitle("GDP per capita by continent") 
+  ggtitle("GDP per capita by continent")
 
 ```
 
@@ -60,10 +88,16 @@ First one used geom_point to plot the GDP per capita of all the countries which 
 Second way is using histogram to show the spread of GDP per capita within the continents and put into the same plot for comparison.
 
 ```{r}
-ggplot(gapminder, aes(gdpPercap)) +
+Option3 %>% 
+ggplot(aes(gdpPercap)) +
   geom_histogram(bins = 15)+
   facet_wrap(~continent, scales = "free_y")
 ```
+
+From the plots above, we can see that Asia has the widest spread. One of the reason may be there are most number of countries in Asia.
+
+
+
 
 
 # Task Option 5
@@ -72,14 +106,22 @@ ggplot(gapminder, aes(gdpPercap)) +
 Since there are lots of lifeExp data in each continent, I need to get the mean of the lifeExp for each continent and plot its changing over time.
 
 ```{r}
-gapminder %>% 
-  group_by(year, continent) %>% 
-  summarize(mean_lifeExp = mean(lifeExp)) %>% 
+Option5 <- gapminder %>% 
+  group_by(continent,year) %>% 
+  summarize(mean_lifeExp = mean(lifeExp))
+  DT::datatable(Option5)
+
+```
+
+
+
+```{r}
+Option5 %>% 
   ggplot(aes(year, mean_lifeExp, group = continent, colour = continent)) +
   geom_line()
 ```
 
-
+We can see that the mean life expectation of each continent are growing and Africa grows slower than other cotinents.
 
 # Optional Exercise
 
