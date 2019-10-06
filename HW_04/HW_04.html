@@ -460,6 +460,40 @@ Ex1_Op1</code></pre>
 <h1>Exercise 2: Multivariate Data Reshaping</h1>
 <div id="choose-either-multivariate-option-1-or-multivariate-option-2.-all-of-these-problems-have-two-components" class="section level3">
 <h3>Choose <em>EITHER</em> “Multivariate Option 1” or “Multivariate Option 2”. All of these problems have two components:</h3>
+<p>Read in the made-up wedding guestlist and email addresses using the following lines (go ahead and copy-paste these):</p>
+<pre class="r"><code>guest &lt;- read_csv(&quot;https://raw.githubusercontent.com/STAT545-UBC/Classroom/master/data/wedding/attend.csv&quot;)</code></pre>
+<pre><code>## Parsed with column specification:
+## cols(
+##   party = col_double(),
+##   name = col_character(),
+##   meal_wedding = col_character(),
+##   meal_brunch = col_character(),
+##   attendance_wedding = col_character(),
+##   attendance_brunch = col_character(),
+##   attendance_golf = col_character()
+## )</code></pre>
+<pre class="r"><code>email &lt;- read_csv(&quot;https://raw.githubusercontent.com/STAT545-UBC/Classroom/master/data/wedding/emails.csv&quot;)</code></pre>
+<pre><code>## Parsed with column specification:
+## cols(
+##   guest = col_character(),
+##   email = col_character()
+## )</code></pre>
+<pre class="r"><code>guest</code></pre>
+<pre><code>## # A tibble: 30 x 7
+##    party name  meal_wedding meal_brunch attendance_wedd~ attendance_brun~
+##    &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;        &lt;chr&gt;       &lt;chr&gt;            &lt;chr&gt;           
+##  1     1 Somm~ PENDING      PENDING     PENDING          PENDING         
+##  2     1 Phil~ vegetarian   Menu C      CONFIRMED        CONFIRMED       
+##  3     1 Blan~ chicken      Menu A      CONFIRMED        CONFIRMED       
+##  4     1 Emaa~ PENDING      PENDING     PENDING          PENDING         
+##  5     2 Blai~ chicken      Menu C      CONFIRMED        CONFIRMED       
+##  6     2 Nige~ &lt;NA&gt;         &lt;NA&gt;        CANCELLED        CANCELLED       
+##  7     3 Sine~ PENDING      PENDING     PENDING          PENDING         
+##  8     4 Ayra~ vegetarian   Menu B      PENDING          PENDING         
+##  9     5 Atla~ PENDING      PENDING     PENDING          PENDING         
+## 10     5 Denz~ fish         Menu B      CONFIRMED        CONFIRMED       
+## # ... with 20 more rows, and 1 more variable: attendance_golf &lt;chr&gt;</code></pre>
+<p>Then, complete the following tasks using the tidyverse (tidyr, dplyr, …). No need to do any pivoting – feel free to leave guest in its current format.</p>
 </div>
 <div id="putting-data-in-wider-format-1" class="section level3">
 <h3>1. Putting data in wider format;</h3>

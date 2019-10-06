@@ -74,14 +74,17 @@ Ex1_Op1 %>%
 
 ### Choose *EITHER* “Multivariate Option 1” or “Multivariate Option 2”. All of these problems have two components:
 
-### 1. Putting data in wider format;
-
+Read in the made-up wedding guestlist and email addresses using the following lines (go ahead and copy-paste these):
 ```{r}
 guest <- read_csv("https://raw.githubusercontent.com/STAT545-UBC/Classroom/master/data/wedding/attend.csv")
 email <- read_csv("https://raw.githubusercontent.com/STAT545-UBC/Classroom/master/data/wedding/emails.csv")
-
-guest
 ```
+
+Then, complete the following tasks using the tidyverse (tidyr, dplyr, …). No need to do any pivoting – feel free to leave guest in its current format.
+
+### 1. Putting data in wider format;
+
+
 
 ### 2. Re-lengthening the data
 
