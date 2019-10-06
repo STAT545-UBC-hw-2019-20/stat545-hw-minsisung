@@ -1,0 +1,93 @@
+---
+title: "HW_04"
+author: "MINSI SUNG"
+date: "06/10/2019"
+output:
+    html_document:
+    keep_md: yes
+    number_sections: yes
+    toc: yes
+    toc_float: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r , warning=FALSE,echo=FALSE}
+suppressPackageStartupMessages(library(tidyverse)) 
+suppressPackageStartupMessages(library(gapminder))
+suppressPackageStartupMessages(library(knitr))
+```
+# Exercise 1: Univariate Data Reshaping
+
+### Choose *EITHER* “Univariate Option 1” or “Univariate Option 2”. Both of these problems have three components:
+
+### 1. Putting data in wider format;
+### 2. Producing a plot of the wide data
+### 3. Re-lengthening the wider data
+
+### You are expected to use pivot_wider() and pivot_longer() for reshaping, and ggplot2 for the plot.
+
+### Regarding the plot:
+* ### Don’t worry about plotting all of the data from the wide tibble．
+* ### The plot should be something that someone might actually want to produce in an analysis.
+
+
+# Univariate Option 1
+### 1. Make a tibble with one row per year, and columns for life expectancy for two or more countries.
+
+```{r}
+Ex1_Op1<-gapminder %>% 
+  select(country,year,lifeExp) %>% 
+  filter(country == "Taiwan"|country == "Japan") %>% 
+  pivot_wider(id_cols = year,
+              names_from = country,
+              values_from = lifeExp)
+Ex1_Op1
+```
+
+### 2. Take advantage of this new data shape to scatterplot life expectancy for one country against that of another.
+
+```{r}
+Ex1_Op1 %>% 
+  ggplot()+
+  geom_point(aes(x = year,y = Japan,colour = "red"))+
+  geom_point(aes(x = year,y = Taiwan,colour = "black"))+
+  labs(y= "life expectancy")+
+  scale_color_manual(name = "Country",
+                     values = c('red' = 'red', "black" = 'black'), 
+                     labels = c('Japan', 'Taiwan'))
+```
+
+### 3. Re-lengthen the data.
+
+```{r}
+Ex1_Op1 %>% 
+  pivot_longer(cols = -year, 
+               names_to  = "country", 
+               values_to = "lifeExp")
+```
+
+
+# Exercise 2: Multivariate Data Reshaping
+
+### Choose *EITHER* “Multivariate Option 1” or “Multivariate Option 2”. All of these problems have two components:
+
+### 1. Putting data in wider format;
+### 2. Re-lengthening the data
+
+### Don’t worry about producing a plot here. You are expected to use pivot_wider() and pivot_longer() for reshaping.
+
+
+
+# Exercise 3: Table Joins
+
+### Do *ALL* of the activities in this section.
+
+## 3.1 For each guest in the guestlist (guest tibble), add a column for email address, which can be found in the email tibble.
+
+## 3.2Who do we have emails for, yet are not on the guestlist?
+
+## 3.3 Make a guestlist that includes everyone we have emails for (in addition to those on the original guestlist).
+
