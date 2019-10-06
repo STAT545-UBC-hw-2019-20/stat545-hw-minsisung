@@ -401,7 +401,7 @@ summary {
 <h3>1. Make a tibble with one row per year, and columns for life expectancy for two or more countries.</h3>
 <pre class="r"><code>Ex1_Op1&lt;-gapminder %&gt;% 
   select(country,year,lifeExp) %&gt;% 
-  filter(country == &quot;Taiwan&quot;|country == &quot;Japan&quot;) %&gt;% 
+  filter(country %in% c(&quot;Taiwan&quot;,&quot;Japan&quot;)) %&gt;% 
   pivot_wider(id_cols = year,
               names_from = country,
               values_from = lifeExp)
@@ -460,6 +460,71 @@ Ex1_Op1</code></pre>
 <h1>Exercise 2: Multivariate Data Reshaping</h1>
 <div id="choose-either-multivariate-option-1-or-multivariate-option-2.-all-of-these-problems-have-two-components" class="section level3">
 <h3>Choose <em>EITHER</em> “Multivariate Option 1” or “Multivariate Option 2”. All of these problems have two components:</h3>
+</div>
+<div id="putting-data-in-wider-format-1" class="section level3">
+<h3>1. Putting data in wider format;</h3>
+</div>
+<div id="re-lengthening-the-data" class="section level3">
+<h3>2. Re-lengthening the data</h3>
+</div>
+<div id="dont-worry-about-producing-a-plot-here.-you-are-expected-to-use-pivot_wider-and-pivot_longer-for-reshaping." class="section level3">
+<h3>Don’t worry about producing a plot here. You are expected to use pivot_wider() and pivot_longer() for reshaping.</h3>
+</div>
+</div>
+<div id="univariate-option-1-1" class="section level1">
+<h1>Univariate Option 1</h1>
+<div id="make-a-tibble-with-one-row-per-year-and-columns-for-life-expectancy-and-gdp-per-capita-or-two-other-numeric-variables-for-two-or-more-countries." class="section level3">
+<h3>1. Make a tibble with one row per year, and columns for life expectancy and GDP per capita (or two other numeric variables) for two or more countries.</h3>
+<pre class="r"><code>Ex2_Op1&lt;-gapminder %&gt;% 
+  filter(country %in% c(&quot;Taiwan&quot;,&quot;Japan&quot;)) %&gt;% 
+  select(year,country,lifeExp,gdpPercap) %&gt;% 
+  pivot_wider(id_cols = year,
+              names_from = country,
+              names_sep = &quot;_&quot;,
+              values_from = c(lifeExp,gdpPercap))
+Ex2_Op1</code></pre>
+<pre><code>## # A tibble: 12 x 5
+##     year lifeExp_Japan lifeExp_Taiwan gdpPercap_Japan gdpPercap_Taiwan
+##    &lt;int&gt;         &lt;dbl&gt;          &lt;dbl&gt;           &lt;dbl&gt;            &lt;dbl&gt;
+##  1  1952          63.0           58.5           3217.            1207.
+##  2  1957          65.5           62.4           4318.            1508.
+##  3  1962          68.7           65.2           6577.            1823.
+##  4  1967          71.4           67.5           9848.            2644.
+##  5  1972          73.4           69.4          14779.            4063.
+##  6  1977          75.4           70.6          16610.            5597.
+##  7  1982          77.1           72.2          19384.            7426.
+##  8  1987          78.7           73.4          22376.           11055.
+##  9  1992          79.4           74.3          26825.           15216.
+## 10  1997          80.7           75.2          28817.           20207.
+## 11  2002          82             77.0          28605.           23235.
+## 12  2007          82.6           78.4          31656.           28718.</code></pre>
+</div>
+<div id="re-lengthen-the-data.-1" class="section level3">
+<h3>2. Re-lengthen the data.</h3>
+<pre class="r"><code>Ex2_Op1 %&gt;% 
+  pivot_longer(cols      = -year, 
+               names_to  = c(&quot;.value&quot;, &quot;country&quot;),
+               names_sep = &quot;_&quot;)</code></pre>
+<pre><code>## # A tibble: 24 x 4
+##     year country lifeExp gdpPercap
+##    &lt;int&gt; &lt;chr&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+##  1  1952 Japan      63.0     3217.
+##  2  1952 Taiwan     58.5     1207.
+##  3  1957 Japan      65.5     4318.
+##  4  1957 Taiwan     62.4     1508.
+##  5  1962 Japan      68.7     6577.
+##  6  1962 Taiwan     65.2     1823.
+##  7  1967 Japan      71.4     9848.
+##  8  1967 Taiwan     67.5     2644.
+##  9  1972 Japan      73.4    14779.
+## 10  1972 Taiwan     69.4     4063.
+## # ... with 14 more rows</code></pre>
+</div>
+</div>
+<div id="exercise-3-table-joins" class="section level1">
+<h1>Exercise 3: Table Joins</h1>
+<div id="do-all-of-the-activities-in-this-section." class="section level3">
+<h3>Do <em>ALL</em> of the activities in this section.</h3>
 <p>Read in the made-up wedding guestlist and email addresses using the following lines (go ahead and copy-paste these):</p>
 <pre class="r"><code>guest &lt;- read_csv(&quot;https://raw.githubusercontent.com/STAT545-UBC/Classroom/master/data/wedding/attend.csv&quot;)</code></pre>
 <pre><code>## Parsed with column specification:
@@ -478,8 +543,47 @@ Ex1_Op1</code></pre>
 ##   guest = col_character(),
 ##   email = col_character()
 ## )</code></pre>
-<pre class="r"><code>guest</code></pre>
-<pre><code>## # A tibble: 30 x 7
+<p>Then, complete the following tasks using the tidyverse (tidyr, dplyr, …). No need to do any pivoting – feel free to leave guest in its current format.</p>
+</div>
+<div id="for-each-guest-in-the-guestlist-guest-tibble-add-a-column-for-email-address-which-can-be-found-in-the-email-tibble." class="section level2">
+<h2>3.1 For each guest in the guestlist (guest tibble), add a column for email address, which can be found in the email tibble.</h2>
+<pre class="r"><code>email_Ex3&lt;-email %&gt;% 
+  separate_rows(guest, sep = &quot;, &quot;) %&gt;% 
+  rename(name = guest)</code></pre>
+<pre class="r"><code>email_Ex3 %&gt;% 
+  inner_join(guest, by=&quot;name&quot;)</code></pre>
+<pre><code>## # A tibble: 25 x 8
+##    name  email party meal_wedding meal_brunch attendance_wedd~
+##    &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt; &lt;chr&gt;        &lt;chr&gt;       &lt;chr&gt;           
+##  1 Somm~ somm~     1 PENDING      PENDING     PENDING         
+##  2 Phil~ somm~     1 vegetarian   Menu C      CONFIRMED       
+##  3 Blan~ somm~     1 chicken      Menu A      CONFIRMED       
+##  4 Emaa~ somm~     1 PENDING      PENDING     PENDING         
+##  5 Blai~ bpar~     2 chicken      Menu C      CONFIRMED       
+##  6 Nige~ bpar~     2 &lt;NA&gt;         &lt;NA&gt;        CANCELLED       
+##  7 Sine~ sing~     3 PENDING      PENDING     PENDING         
+##  8 Ayra~ mark~     4 vegetarian   Menu B      PENDING         
+##  9 Jole~ jw19~     6 &lt;NA&gt;         &lt;NA&gt;        CANCELLED       
+## 10 Hayl~ jw19~     6 vegetarian   Menu C      CONFIRMED       
+## # ... with 15 more rows, and 2 more variables: attendance_brunch &lt;chr&gt;,
+## #   attendance_golf &lt;chr&gt;</code></pre>
+</div>
+<div id="who-do-we-have-emails-for-yet-are-not-on-the-guestlist" class="section level2">
+<h2>3.2Who do we have emails for, yet are not on the guestlist?</h2>
+<pre class="r"><code>email_Ex3 %&gt;%
+  anti_join(guest, by=&quot;name&quot;)</code></pre>
+<pre><code>## # A tibble: 3 x 2
+##   name            email                          
+##   &lt;chr&gt;           &lt;chr&gt;                          
+## 1 Turner Jones    tjjones12@hotmail.ca           
+## 2 Albert Marshall themarshallfamily1234@gmail.com
+## 3 Vivian Marshall themarshallfamily1234@gmail.com</code></pre>
+</div>
+<div id="make-a-guestlist-that-includes-everyone-we-have-emails-for-in-addition-to-those-on-the-original-guestlist." class="section level2">
+<h2>3.3 Make a guestlist that includes everyone we have emails for (in addition to those on the original guestlist).</h2>
+<pre class="r"><code>guest %&gt;% 
+  full_join(email_Ex3, by=&quot;name&quot;)</code></pre>
+<pre><code>## # A tibble: 33 x 8
 ##    party name  meal_wedding meal_brunch attendance_wedd~ attendance_brun~
 ##    &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;        &lt;chr&gt;       &lt;chr&gt;            &lt;chr&gt;           
 ##  1     1 Somm~ PENDING      PENDING     PENDING          PENDING         
@@ -492,32 +596,8 @@ Ex1_Op1</code></pre>
 ##  8     4 Ayra~ vegetarian   Menu B      PENDING          PENDING         
 ##  9     5 Atla~ PENDING      PENDING     PENDING          PENDING         
 ## 10     5 Denz~ fish         Menu B      CONFIRMED        CONFIRMED       
-## # ... with 20 more rows, and 1 more variable: attendance_golf &lt;chr&gt;</code></pre>
-<p>Then, complete the following tasks using the tidyverse (tidyr, dplyr, …). No need to do any pivoting – feel free to leave guest in its current format.</p>
-</div>
-<div id="putting-data-in-wider-format-1" class="section level3">
-<h3>1. Putting data in wider format;</h3>
-</div>
-<div id="re-lengthening-the-data" class="section level3">
-<h3>2. Re-lengthening the data</h3>
-</div>
-<div id="dont-worry-about-producing-a-plot-here.-you-are-expected-to-use-pivot_wider-and-pivot_longer-for-reshaping." class="section level3">
-<h3>Don’t worry about producing a plot here. You are expected to use pivot_wider() and pivot_longer() for reshaping.</h3>
-</div>
-</div>
-<div id="exercise-3-table-joins" class="section level1">
-<h1>Exercise 3: Table Joins</h1>
-<div id="do-all-of-the-activities-in-this-section." class="section level3">
-<h3>Do <em>ALL</em> of the activities in this section.</h3>
-</div>
-<div id="for-each-guest-in-the-guestlist-guest-tibble-add-a-column-for-email-address-which-can-be-found-in-the-email-tibble." class="section level2">
-<h2>3.1 For each guest in the guestlist (guest tibble), add a column for email address, which can be found in the email tibble.</h2>
-</div>
-<div id="who-do-we-have-emails-for-yet-are-not-on-the-guestlist" class="section level2">
-<h2>3.2Who do we have emails for, yet are not on the guestlist?</h2>
-</div>
-<div id="make-a-guestlist-that-includes-everyone-we-have-emails-for-in-addition-to-those-on-the-original-guestlist." class="section level2">
-<h2>3.3 Make a guestlist that includes everyone we have emails for (in addition to those on the original guestlist).</h2>
+## # ... with 23 more rows, and 2 more variables: attendance_golf &lt;chr&gt;,
+## #   email &lt;chr&gt;</code></pre>
 </div>
 </div>
 
