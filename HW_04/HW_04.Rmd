@@ -40,7 +40,7 @@ suppressPackageStartupMessages(library(knitr))
 ```{r}
 Ex1_Op1<-gapminder %>% 
   select(country,year,lifeExp) %>% 
-  filter(country == "Taiwan"|country == "Japan") %>% 
+  filter(country %in% c("Taiwan","Japan")) %>% 
   pivot_wider(id_cols = year,
               names_from = country,
               values_from = lifeExp)
@@ -74,6 +74,42 @@ Ex1_Op1 %>%
 
 ### Choose *EITHER* “Multivariate Option 1” or “Multivariate Option 2”. All of these problems have two components:
 
+
+
+### 1. Putting data in wider format;
+### 2. Re-lengthening the data
+
+### Don’t worry about producing a plot here. You are expected to use pivot_wider() and pivot_longer() for reshaping.
+
+# Univariate Option 1
+### 1. Make a tibble with one row per year, and columns for life expectancy and GDP per capita (or two other numeric variables) for two or more countries.
+
+```{r}
+Ex2_Op1<-gapminder %>% 
+  filter(country %in% c("Taiwan","Japan")) %>% 
+  select(year,country,lifeExp,gdpPercap) %>% 
+  pivot_wider(id_cols = year,
+              names_from = country,
+              names_sep = "_",
+              values_from = c(lifeExp,gdpPercap))
+Ex2_Op1
+```
+
+
+### 2. Re-lengthen the data.
+
+```{r}
+Ex2_Op1 %>% 
+  pivot_longer(cols      = -year, 
+               names_to  = c(".value", "country"),
+               names_sep = "_")
+```
+
+
+# Exercise 3: Table Joins
+
+### Do *ALL* of the activities in this section.
+
 Read in the made-up wedding guestlist and email addresses using the following lines (go ahead and copy-paste these):
 ```{r}
 guest <- read_csv("https://raw.githubusercontent.com/STAT545-UBC/Classroom/master/data/wedding/attend.csv")
@@ -82,23 +118,40 @@ email <- read_csv("https://raw.githubusercontent.com/STAT545-UBC/Classroom/maste
 
 Then, complete the following tasks using the tidyverse (tidyr, dplyr, …). No need to do any pivoting – feel free to leave guest in its current format.
 
-### 1. Putting data in wider format;
-
-
-
-### 2. Re-lengthening the data
-
-### Don’t worry about producing a plot here. You are expected to use pivot_wider() and pivot_longer() for reshaping.
-
-
-
-# Exercise 3: Table Joins
-
-### Do *ALL* of the activities in this section.
-
 ## 3.1 For each guest in the guestlist (guest tibble), add a column for email address, which can be found in the email tibble.
+
+```{r}
+email_Ex3<-email %>% 
+  separate_rows(guest, sep = ", ") %>% 
+  rename(name = guest)
+```
+
+
+
+
+
+```{r}
+email_Ex3 %>% 
+  inner_join(guest, by="name")
+```
+
 
 ## 3.2Who do we have emails for, yet are not on the guestlist?
 
+```{r}
+email_Ex3 %>%
+  anti_join(guest, by="name")
+
+```
+
+
+
+
+
 ## 3.3 Make a guestlist that includes everyone we have emails for (in addition to those on the original guestlist).
+
+```{r}
+guest %>% 
+  full_join(email_Ex3, by="name")
+```
 
