@@ -75,6 +75,14 @@ Ex1_Op1 %>%
 ### Choose *EITHER* “Multivariate Option 1” or “Multivariate Option 2”. All of these problems have two components:
 
 ### 1. Putting data in wider format;
+
+```{r}
+guest <- read_csv("https://raw.githubusercontent.com/STAT545-UBC/Classroom/master/data/wedding/attend.csv")
+email <- read_csv("https://raw.githubusercontent.com/STAT545-UBC/Classroom/master/data/wedding/emails.csv")
+
+guest
+```
+
 ### 2. Re-lengthening the data
 
 ### Don’t worry about producing a plot here. You are expected to use pivot_wider() and pivot_longer() for reshaping.
