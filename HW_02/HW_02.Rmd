@@ -10,6 +10,7 @@ output:
     toc_float: yes
 ---
     
+    
 ```{r load, warning=FALSE,echo=FALSE}
 suppressPackageStartupMessages(library(gapminder))
 suppressPackageStartupMessages(library(tidyverse))  # included package 'dplyr'

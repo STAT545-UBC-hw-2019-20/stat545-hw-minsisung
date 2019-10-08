@@ -10,6 +10,7 @@ output:
     toc_float: yes
 ---
 
+
 ```{r , warning=FALSE,echo=FALSE}
 suppressPackageStartupMessages(library(tidyverse)) 
 suppressPackageStartupMessages(library(gapminder))
