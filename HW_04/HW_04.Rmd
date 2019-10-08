@@ -58,7 +58,9 @@ The red dots represent the life expectancy of Japan for each year and black dots
 Ex1_Op1 %>% 
   ggplot()+
   geom_point(aes(x = year,y = Japan, colour = "red"))+
+  geom_line(aes(x = year,y = Japan, colour = "red"))+
   geom_point(aes(x = year,y = Taiwan, colour = "black"))+
+  geom_line(aes(x = year,y = Taiwan, colour = "black"))+
   labs(y= "life expectancy")+
   scale_color_manual(name = "Country",
                      values = c( "black" = 'black','red' = 'red'), 
