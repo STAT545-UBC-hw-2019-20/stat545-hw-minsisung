@@ -37,6 +37,9 @@ suppressPackageStartupMessages(library(knitr))
 # Univariate Option 1
 ### 1. Make a tibble with one row per year, and columns for life expectancy for two or more countries.
 
+Here I choose Japan and Taiwan to make the tibble. The column I would like to keep is "year" so id_cols = year. The new column names are coming from country and the values are from lifeExp
+
+
 ```{r}
 Ex1_Op1<-gapminder %>% 
   select(country,year,lifeExp) %>% 
@@ -49,18 +52,27 @@ Ex1_Op1
 
 ### 2. Take advantage of this new data shape to scatterplot life expectancy for one country against that of another.
 
+The red dots represent the life expectancy of Japan for each year and black dots are for Taiwan
+
 ```{r}
 Ex1_Op1 %>% 
   ggplot()+
-  geom_point(aes(x = year,y = Japan,colour = "red"))+
-  geom_point(aes(x = year,y = Taiwan,colour = "black"))+
+  geom_point(aes(x = year,y = Japan, colour = "red"))+
+  geom_point(aes(x = year,y = Taiwan, colour = "black"))+
   labs(y= "life expectancy")+
   scale_color_manual(name = "Country",
-                     values = c('red' = 'red', "black" = 'black'), 
-                     labels = c('Japan', 'Taiwan'))
+                     values = c( "black" = 'black','red' = 'red'), 
+                     labels = c('Taiwan', 'Japan'))
 ```
 
+
+
+From the plot above, we can see that the life expectancy of both Japan and Taiwan are growing with the similar speed.
+
+
 ### 3. Re-lengthen the data.
+
+To re=lengthen the data, we need to use pivot_longer. The columns that I want to turn into a single colunm are Japan and Taiwan, so I use -year. The name of the new column is "country" and the name for the value is "lifeExp"
 
 ```{r}
 Ex1_Op1 %>% 
@@ -74,15 +86,15 @@ Ex1_Op1 %>%
 
 ### Choose *EITHER* “Multivariate Option 1” or “Multivariate Option 2”. All of these problems have two components:
 
-
-
 ### 1. Putting data in wider format;
 ### 2. Re-lengthening the data
 
 ### Don’t worry about producing a plot here. You are expected to use pivot_wider() and pivot_longer() for reshaping.
 
-# Univariate Option 1
+# Multivariate Option 1
 ### 1. Make a tibble with one row per year, and columns for life expectancy and GDP per capita (or two other numeric variables) for two or more countries.
+
+Again, here I choose Taiwan and Japan for this exercise. To make a tibble with columns for lifeExp and gdpPerCap for two countries, I need to use pivot_wider. The colunmn I would like to keep is year and the the colunm that contains the part of the variable is country. Here I use underscroll as my separator and the values are from lifeExp and gdpPercap.
 
 ```{r}
 Ex2_Op1<-gapminder %>% 
@@ -98,6 +110,7 @@ Ex2_Op1
 
 ### 2. Re-lengthen the data.
 
+To re-lengthen the data I created above, just use pivot_longer then we can achieve the goal.
 ```{r}
 Ex2_Op1 %>% 
   pivot_longer(cols      = -year, 
@@ -120,6 +133,8 @@ Then, complete the following tasks using the tidyverse (tidyr, dplyr, …). No n
 
 ## 3.1 For each guest in the guestlist (guest tibble), add a column for email address, which can be found in the email tibble.
 
+First I need to create a new tibble to have all guests name match with their email.
+Then rename the guest to name for the following usage.
 ```{r}
 email_Ex3<-email %>% 
   separate_rows(guest, sep = ", ") %>% 
@@ -128,7 +143,7 @@ email_Ex3<-email %>%
 
 
 
-
+Since I need to add a column for email address which can be found in the email tibble, I can use inner_join that can deal with the data which is contained in both of the tibbles. 
 
 ```{r}
 email_Ex3 %>% 
@@ -137,6 +152,8 @@ email_Ex3 %>%
 
 
 ## 3.2Who do we have emails for, yet are not on the guestlist?
+
+Anti_join drops all observations in first tibble that have a match in the second tibble. So we can use it to find who do we have emails but are not on the guestlist.
 
 ```{r}
 email_Ex3 %>%
@@ -149,6 +166,8 @@ email_Ex3 %>%
 
 
 ## 3.3 Make a guestlist that includes everyone we have emails for (in addition to those on the original guestlist).
+
+Full_join combine both tibbles for all the data no matter whether the data is in both tibbles or not.
 
 ```{r}
 guest %>% 
