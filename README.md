@@ -25,7 +25,7 @@ This repository is used to submit the [Assignment](https://stat545.stat.ubc.ca/e
 [Assignment 02](https://stat545.stat.ubc.ca/evaluation/hw02/hw02/)|September 24, 2019
 [Assignment 03](https://stat545.stat.ubc.ca/evaluation/hw03/hw03/)|October 01, 2019
 [Assignment 04](https://stat545.stat.ubc.ca/evaluation/hw04/hw04/) |October 08, 2019
-Assignment 05 |October 18, 2019
+[Assignment 05](https://stat545.stat.ubc.ca/evaluation/hw05/hw05/) |October 17, 2019
 
 ## About Me
 My name is *Minsi Sung*. I come from Taiwan and I am a second year graduate student in Mechanical Engineering :rocket: at the University of British Columbia (UBC) in Vancouver. 
