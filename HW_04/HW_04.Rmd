@@ -15,6 +15,7 @@ output:
 suppressPackageStartupMessages(library(tidyverse)) 
 suppressPackageStartupMessages(library(gapminder))
 suppressPackageStartupMessages(library(knitr))
+suppressMessages(library(DT))
 ```
 # Exercise 1: Univariate Data Reshaping
 
@@ -53,15 +54,14 @@ The red dots represent the life expectancy of Japan for each year and black dots
 
 ```{r}
 Ex1_Op1 %>% 
-  ggplot()+
-  geom_point(aes(x = year,y = Japan, colour = "red"))+
-  geom_line(aes(x = year,y = Japan, colour = "red"))+
-  geom_point(aes(x = year,y = Taiwan, colour = "black"))+
-  geom_line(aes(x = year,y = Taiwan, colour = "black"))+
-  labs(y= "life expectancy")+
-  scale_color_manual(name = "Country",
-                     values = c( "black" = 'black','red' = 'red'), 
-                     labels = c('Taiwan', 'Japan'))
+  ggplot(aes(Japan, Taiwan)) +
+  geom_point(aes(color = as.factor(year))) +
+  geom_text(aes(label=year), nudge_x = -1.2)+
+  ggtitle("Life Expectancy from 1952 to 2007") +
+  ylab("Life Expectancy in Japan (years)") +
+  xlab("Life Expectancy in Taiwan (years)") +
+  scale_color_discrete("Year") +
+  theme(text = element_text(size=18))
 ```
 
 
@@ -105,7 +105,8 @@ Ex2_Op1<-gapminder %>%
               names_from = country,
               names_sep = "_",
               values_from = c(lifeExp,gdpPercap))
-DT::datatable(Ex2_Op1)
+datatable(Ex2_Op1, rownames = FALSE, 
+          options = list(scrollX = TRUE, fixedColumns = TRUE))
 ```
 
 
