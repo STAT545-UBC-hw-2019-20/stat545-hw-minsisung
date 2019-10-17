@@ -55,7 +55,7 @@ The red dots represent the life expectancy of Japan for each year and black dots
 ```{r}
 Ex1_Op1 %>% 
   ggplot(aes(Japan, Taiwan)) +
-  geom_point(aes(color = as.factor(year))) +
+  geom_point() +
   geom_text(aes(label=year), nudge_x = -1.2)+
   ggtitle("Life Expectancy from 1952 to 2007") +
   ylab("Life Expectancy in Japan (years)") +

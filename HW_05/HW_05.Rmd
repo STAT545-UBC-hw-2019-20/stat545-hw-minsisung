@@ -33,47 +33,87 @@ Therefore, here package provides a platform-independent and sipmlier way for cod
 
 ### Task: Choose **one** dataset (of your choice) and a variable to explore. After ensuring the variable(s) you’re exploring are indeed factors, you should:
 
-For exercise 2, I will stick to the gapminder as my dataset and continent as the variable for the factor management.
+For exercise 2, I will stick to the gapminder as my dataset and `continent` as the variable for the factor management.
 
-In the gapminder, all factors in `continent` are:
-```{r}
-levels(gapminder$continent)
-```
-
-
-### 1. Drop factor / levels;
-### 2. Reorder levels based on knowledge from data.
-
-### We’ve elaborated on these steps for the gapminder and singer data sets below. Explore the effects of re-leveling a factor in a tibble by:
-
-### 1. comparing the results of <span style="color:red">arrange</span> on the original and re-leveled factor.
-### 2. Plotting a figure of before/after re-leveling the factor (make sure to assign the factor to an aesthetic of your choosing).
-### These explorations should involve the data, the factor levels, and at least two figures (before and after.
-
-## **Elaboration for the gapminder data set**
-### **Drop Oceania.** Filter the Gapminder data to remove observations associated with the <span style="color:red">continent</span> of Oceania. Additionally, remove unused factor levels. Provide concrete information on the data before and after removing these rows and Oceania; address the number of rows and the levels of the affected factors.
-
-### **Reorder the levels of <span style="color:red">country</span> or <span style="color:red">continent</span>.** Use the forcats package to change the order of the factor levels, based on summarized information of one of the quantitative variables. Consider experimenting with a summary statistic beyond the most basic choice of the mean/median. Use the <span style="color:red">forcats</span> package in the tidyverse for this, rather than the baseR function <span style="color:red">as.factor</span>.
-
-
+Let's take a look at the `continent`:
 
 ```{r}
 class(gapminder$continent)
 ```
 
+```{r}
+levels(gapminder$continent)
+```
+We can see that `continent` is indeed a factor that have five levels.
+
+### 1. Drop factor / levels;
+
+To drop all the data of the Oceania from the gapminder, We can use `filter()` and drop the unused level by `droplevels()`:
 
 ```{r}
-Filter_Oceania<-gapminder %>% 
-  filter(continent != "Oceania")
-levels(Filter_Oceania$continent)
-```
-```{r}
-Oceania_dropped <- Filter_Oceania %>% 
+filtered_gapminder<- gapminder %>% 
+  filter(continent != "Oceania") %>% 
   droplevels()
 
-Oceania_dropped$continent %>% 
-  nlevels()
+DT::datatable(filtered_gapminder)
 ```
+
+
+So, we can see we only have 4 levels now.
+```{r}
+levels(filtered_gapminder$continent)
+```
+
+The number of the row before dropping is:
+```{r}
+nrow(gapminder)
+```
+After dropping is:
+```{r}
+nrow(filtered_gapminder)
+```
+
+### 2. Reorder levels based on knowledge from data.
+
+Let's see the plot of average life expectancy for each continent.
+```{r}
+unreordered <- gapminder %>%
+  group_by(continent) %>%
+  summarise(mean_lifeExp = mean(lifeExp)) %>%
+  ggplot() +
+  geom_col(aes(continent,mean_lifeExp)) +
+  ylab("Mean of\nLife Expectancy") +
+  xlab("Continent") +
+  coord_flip() +
+  ggtitle("Unreordered")
+
+unreordered 
+```
+
+Before we reorder the levels, it's alphabetical order by default. If we want to reorder the levels of `continent` in the plot to have the longer mean life expectancy on the top and shorter mean life expectancy on the bottom, we can use `fct_reorder()`:
+
+```{r}
+reordered <- gapminder %>%
+  group_by(continent) %>%
+  summarise(mean_lifeExp = mean(lifeExp)) %>%
+  ggplot() +
+  geom_col(aes(fct_reorder(continent,mean_lifeExp),mean_lifeExp)) +
+  ylab("Mean of\nLife Expectancy") +
+  xlab("Continent") +
+  coord_flip() +
+  ggtitle("Reordered")
+
+reordered
+```
+
+
+
+```{r}
+
+
+```
+
+
 
 
 # Exercise 3: File input/output (I/O)
@@ -85,14 +125,71 @@ Oceania_dropped$continent %>%
 
 ### You are expected to create something new, probably by filtering or grouped-summarization of your dataset (for e.g., Singer, Gapminder, or another dataset), export it to disk and then reload it back in using one of the packages above. You should use here::here() for reading in and writing out. With the imported data, play around with factor levels and use factors to order your data with one of your factors (i.e. non-alphabetically). For the I/O method(s) you chose, comment on whether or not your newly created file survived the round trip of writing to file then reading back in.
 
+Here I am going to create a new dataset that has the mean life expectancy of all the countries in Asia and reorder by the mean life expectancy:
+```{r}
+something_new <- gapminder %>%
+  filter(continent == "Asia") %>%
+  group_by(country) %>%
+  mutate(mean_lifeExp = mean(lifeExp)) %>%
+  arrange(mean_lifeExp) %>% 
+  select(country, continent, mean_lifeExp) %>%
+  distinct()
+
+DT::datatable(something_new)
+```
+
+Here we use `here::here` to increase robustness and export the file to the HW_05 folder
+
+```{r}
+write_csv(something_new, here::here("HW_05","something_new.csv"))
+```
+
+Let's reload the something_new file back:
+
+```{r}
+reload_gap <- read_csv(here::here("HW_05","something_new.csv"))
+```
+
+
 # Exercise 4: Visualization design
-### Go back through your previous assignments and class participation activities and find figures you created prior to the last week of the course. Recreate at least one figure in light of something you learned in the recent class meetings about visualization design and color. Task: Create a side-by-side plot and juxtapose your first attempt (show the original figure as-is) with a revised attempt after some time spent working on it and implementing principles of effective plotting principles. Comment and reflect on the differences.
+###  Task: Create a side-by-side plot and juxtapose your first attempt (show the original figure as-is) with a revised attempt after some time spent working on it and implementing principles of effective plotting principles. Comment and reflect on the differences.
+
+
+```{r}
+original <- gapminder %>% 
+  ggplot(aes(x=gdpPercap))+ 
+  geom_density()+ #Plot density
+  scale_x_log10()+
+  facet_wrap(~continent)+ #plot the density side by side
+  ggtitle("original plot")
+
+new <- gapminder %>% 
+  ggplot(aes(x=gdpPercap, y = continent))+ 
+  scale_x_log10()+
+  ggridges::geom_density_ridges()+
+    ggtitle("new plot")
+
+cowplot::plot_grid(original, new, 
+          ncol = 1, nrow = 2)
+```
+
+
+In the upper plot(original), the gdp per capita distribution for each continent is depicted separatedly in its own. It is not intuitive to compare the plot of each continent in different plots since the readers need to check whether the x axis of each plots are the same. The new version (bottom) put all the plots into the same one. So the readers can intuitively know the distribution of the gdp per capita for each continent by a glimpse.
+
+
 
 # Exercise 5: Writing figures to file
 ### Task: Use <span style="color:red">ggsave()</span> to explicitly save a plot to file. Include the exported plot as part of your repository and assignment.
+
+
+```{r}
+ggsave(here::here("HW_05","gdpPercap_each_continent.png"), plot = new)
+```
 
 ### Then, use <span style="color:red">![Alt text] (/path/to/img.png) </span> to load and embed that file into your report. You can play around with various options, such as:
 
 * ### Arguments of <span style="color:red">ggsave()</span>, such as width, height, resolution or text scaling.
 * ### Various graphics devices, e.g. a vector vs. raster format.
 * ### Explicit provision of the plot object <span style="color:red">p</span> via <span style="color:red">ggsave(..., plot = p)</span>. Show a situation in which this actually matters.
+
+![Loading the exported image](gdpPercap_each_continent.png)
