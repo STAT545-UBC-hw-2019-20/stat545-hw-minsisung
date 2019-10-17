@@ -373,15 +373,17 @@ summary {
 <h1>Exercise 1:Explain the value of the here::here package</h1>
 <div id="read-through-the-blog-post-by-malcolm-barrett-where-he-outlines-why-one-should-use-the-herehere-package-in-rstudio-projects." class="section level3">
 <h3>Read through the <a href="https://malco.io/2018/11/05/why-should-i-use-the-here-package-when-i-m-already-using-projects/">blog post by Malcolm Barrett</a> where he outlines why one should use the here::here package in RStudio projects.</h3>
-</div>
-<div id="task-in-your-own-words-summarize-the-value-of-the-herehere-package-in-250-words-or-fewer." class="section level3">
-<h3>Task: In your own words, summarize the value of the here::here package in 250 words or fewer.</h3>
+<p>The here::here makes the code more robust and easier for others to open. It is not practical to start the code with setwd() to specify the working directory since the directory depends on the devices and operating systems. The here::here package solve the problem to find the working directory and avoid the need to manually specify a working directory. Moreover, it use “,” to separate each subdirectory instead of “&quot; in windows or”/&quot; in Mac OS. It makes the code reproducible. The other reason why one should use the here::here is that the R Markdown documents sets a local working directory. In order to read the .Rmd, one needs backtracking such as ../folder/file.Rmd. Using here(“folder”,“file.Rmd”) can solve this problem. Therefore, here package provides a platform-independent and sipmlier way for coding.</p>
 </div>
 </div>
 <div id="exercise-2-factor-management" class="section level1">
 <h1>Exercise 2: Factor management</h1>
 <div id="task-choose-one-dataset-of-your-choice-and-a-variable-to-explore.-after-ensuring-the-variables-youre-exploring-are-indeed-factors-you-should" class="section level3">
 <h3>Task: Choose <strong>one</strong> dataset (of your choice) and a variable to explore. After ensuring the variable(s) you’re exploring are indeed factors, you should:</h3>
+<p>For exercise 2, I will stick to the gapminder as my dataset and continent as the variable for the factor management.</p>
+<p>In the gapminder, all factors in <code>continent</code> are:</p>
+<pre class="r"><code>levels(gapminder$continent)</code></pre>
+<pre><code>## [1] &quot;Africa&quot;   &quot;Americas&quot; &quot;Asia&quot;     &quot;Europe&quot;   &quot;Oceania&quot;</code></pre>
 </div>
 <div id="drop-factor-levels" class="section level3">
 <h3>1. Drop factor / levels;</h3>
@@ -408,18 +410,18 @@ summary {
 </div>
 <div id="reorder-the-levels-of-country-or-continent.-use-the-forcats-package-to-change-the-order-of-the-factor-levels-based-on-summarized-information-of-one-of-the-quantitative-variables.-consider-experimenting-with-a-summary-statistic-beyond-the-most-basic-choice-of-the-meanmedian.-use-the-forcats-package-in-the-tidyverse-for-this-rather-than-the-baser-function-as.factor." class="section level3">
 <h3><strong>Reorder the levels of <span style="color:red">country</span> or <span style="color:red">continent</span>.</strong> Use the forcats package to change the order of the factor levels, based on summarized information of one of the quantitative variables. Consider experimenting with a summary statistic beyond the most basic choice of the mean/median. Use the <span style="color:red">forcats</span> package in the tidyverse for this, rather than the baseR function <span style="color:red">as.factor</span>.</h3>
-</div>
-</div>
-<div id="elaboration-for-the-singer-data-set" class="section level2">
-<h2><strong>Elaboration for the Singer data set</strong></h2>
-<div id="if-necessary-transform-some-of-the-variables-in-the-singer_locations-dataframe-into-factors-pay-attention-at-what-levels-you-introduce-and-their-order." class="section level3">
-<h3>If necessary, transform some of the variables in the <span style="color:red">singer_locations</span> dataframe into factors: pay attention at what levels you introduce and their order.</h3>
-</div>
-<div id="drop-0.-filter-the-singer_locations-data-to-remove-observations-associated-with-the-uncorrectly-inputed-year-0.-additionally-remove-unused-factor-levels.-provide-concrete-information-on-the-data-before-and-after-removing-these-rows-and-levels-address-the-number-of-rows-and-the-levels-of-the-affected-factors." class="section level3">
-<h3><strong>Drop 0.</strong> Filter the <span style="color:red">singer_locations</span> data to remove observations associated with the uncorrectly inputed <span style="color:red">year</span> 0. Additionally, remove unused factor levels. Provide concrete information on the data before and after removing these rows and levels; address the number of rows and the levels of the affected factors.</h3>
-</div>
-<div id="reorder-the-levels-of-year-artist_name-or-title.-use-the-forcats-package-to-change-the-order-of-the-factor-levels-based-on-a-principled-summary-of-one-of-the-quantitative-variables.-consider-experimenting-with-a-summary-statistic-beyond-the-most-basic-choice-of-the-median." class="section level3">
-<h3><strong>Reorder the levels of <span style="color:red">year</span>, <span style="color:red">artist_name</span> or <span style="color:red">title</span></strong>. Use the forcats package to change the order of the factor levels, based on a principled summary of one of the quantitative variables. Consider experimenting with a summary statistic beyond the most basic choice of the median.</h3>
+<pre class="r"><code>class(gapminder$continent)</code></pre>
+<pre><code>## [1] &quot;factor&quot;</code></pre>
+<pre class="r"><code>Filter_Oceania&lt;-gapminder %&gt;% 
+  filter(continent != &quot;Oceania&quot;)
+levels(Filter_Oceania$continent)</code></pre>
+<pre><code>## [1] &quot;Africa&quot;   &quot;Americas&quot; &quot;Asia&quot;     &quot;Europe&quot;   &quot;Oceania&quot;</code></pre>
+<pre class="r"><code>Oceania_dropped &lt;- Filter_Oceania %&gt;% 
+  droplevels()
+
+Oceania_dropped$continent %&gt;% 
+  nlevels()</code></pre>
+<pre><code>## [1] 4</code></pre>
 </div>
 </div>
 </div>

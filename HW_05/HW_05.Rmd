@@ -14,6 +14,8 @@ output:
 suppressPackageStartupMessages(library(tidyverse)) 
 suppressPackageStartupMessages(library(gapminder))
 suppressPackageStartupMessages(library(knitr))
+suppressPackageStartupMessages(library(forcats))
+suppressPackageStartupMessages(library(ggplot2))
 ```
 
 
@@ -21,13 +23,22 @@ suppressPackageStartupMessages(library(knitr))
 
 ### Read through the [blog post by Malcolm Barrett](https://malco.io/2018/11/05/why-should-i-use-the-here-package-when-i-m-already-using-projects/) where he outlines why one should use the here::here package in RStudio projects.
 
-### Task: In your own words, summarize the value of the here::here package in 250 words or fewer.
-
+The here::here makes the code more robust and easier for others to open. It is not practical to start the code with setwd() to specify the working directory since the directory depends on the devices and operating systems. The here::here package solve the problem to find the working directory and avoid the need to manually specify a working directory. 
+Moreover, it use ", " to separate each subdirectory instead of "\" in windows or "/" in Mac OS. It makes the code reproducible.
+The other reason why one should use the here::here is that the R Markdown documents sets a local working directory. In order to read the .Rmd, one needs backtracking such as ../folder/file.Rmd. Using here("folder","file.Rmd") can solve this problem.
+Therefore, here package provides a platform-independent and sipmlier way for coding.
 
 
 # Exercise 2: Factor management
 
 ### Task: Choose **one** dataset (of your choice) and a variable to explore. After ensuring the variable(s) you’re exploring are indeed factors, you should:
+
+For exercise 2, I will stick to the gapminder as my dataset and continent as the variable for the factor management.
+
+In the gapminder, all factors in `continent` are:
+```{r}
+levels(gapminder$continent)
+```
 
 
 ### 1. Drop factor / levels;
@@ -44,14 +55,25 @@ suppressPackageStartupMessages(library(knitr))
 
 ### **Reorder the levels of <span style="color:red">country</span> or <span style="color:red">continent</span>.** Use the forcats package to change the order of the factor levels, based on summarized information of one of the quantitative variables. Consider experimenting with a summary statistic beyond the most basic choice of the mean/median. Use the <span style="color:red">forcats</span> package in the tidyverse for this, rather than the baseR function <span style="color:red">as.factor</span>.
 
-## **Elaboration for the Singer data set**
 
-### If necessary, transform some of the variables in the <span style="color:red">singer_locations</span> dataframe into factors: pay attention at what levels you introduce and their order.
 
-### **Drop 0.** Filter the <span style="color:red">singer_locations</span> data to remove observations associated with the uncorrectly inputed <span style="color:red">year</span> 0. Additionally, remove unused factor levels. Provide concrete information on the data before and after removing these rows and levels; address the number of rows and the levels of the affected factors.
+```{r}
+class(gapminder$continent)
+```
 
-### **Reorder the levels of <span style="color:red">year</span>, <span style="color:red">artist_name</span> or <span style="color:red">title</span>**. Use the forcats package to change the order of the factor levels, based on a principled summary of one of the quantitative variables. Consider experimenting with a summary statistic beyond the most basic choice of the median.
 
+```{r}
+Filter_Oceania<-gapminder %>% 
+  filter(continent != "Oceania")
+levels(Filter_Oceania$continent)
+```
+```{r}
+Oceania_dropped <- Filter_Oceania %>% 
+  droplevels()
+
+Oceania_dropped$continent %>% 
+  nlevels()
+```
 
 
 # Exercise 3: File input/output (I/O)
