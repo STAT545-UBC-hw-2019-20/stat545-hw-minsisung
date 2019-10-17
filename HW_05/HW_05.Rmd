@@ -16,6 +16,7 @@ suppressPackageStartupMessages(library(gapminder))
 suppressPackageStartupMessages(library(knitr))
 suppressPackageStartupMessages(library(forcats))
 suppressPackageStartupMessages(library(ggplot2))
+suppressPackageStartupMessages(library(here))
 ```
 
 
@@ -173,7 +174,6 @@ cowplot::plot_grid(original, new,
           ncol = 1, nrow = 2)
 ```
 
-
 In the upper plot(original), the gdp per capita distribution for each continent is depicted separatedly in its own. It is not intuitive to compare the plot of each continent in different plots since the readers need to check whether the x axis of each plots are the same. The new version (bottom) put all the plots into the same one. So the readers can intuitively know the distribution of the gdp per capita for each continent by a glimpse.
 
 
@@ -183,13 +183,13 @@ In the upper plot(original), the gdp per capita distribution for each continent 
 
 
 ```{r}
-ggsave(here::here("HW_05","gdpPercap_each_continent.png"), plot = new)
+ggsave(here::here("HW_05","gdpPercap_each_continent_new.png"), plot = new, width = 4, height = 4, scale = 1)
+ggsave(here::here("HW_05","gdpPercap_each_continent_original.png"), plot = original, width = 4, height = 4, scale = 1)
 ```
 
 ### Then, use <span style="color:red">![Alt text] (/path/to/img.png) </span> to load and embed that file into your report. You can play around with various options, such as:
 
-* ### Arguments of <span style="color:red">ggsave()</span>, such as width, height, resolution or text scaling.
-* ### Various graphics devices, e.g. a vector vs. raster format.
-* ### Explicit provision of the plot object <span style="color:red">p</span> via <span style="color:red">ggsave(..., plot = p)</span>. Show a situation in which this actually matters.
 
-![Loading the exported image](gdpPercap_each_continent.png)
+![Loading the exported image](gdpPercap_each_continent_original.png)
+
+![Loading the exported image](gdpPercap_each_continent_new.png)
