@@ -3,9 +3,9 @@ title: "HW_05"
 author: "MINSI SUNG"
 date: "14/10/2019"
 output:
-    html_document:
+  html_document:
     keep_md: yes
-    number_sections: yes
+    number_sections: no
     toc: yes
     toc_float: yes
 ---
@@ -32,8 +32,6 @@ Therefore, here package provides a platform-independent and sipmlier way for cod
 
 # Exercise 2: Factor management
 
-### Task: Choose **one** dataset (of your choice) and a variable to explore. After ensuring the variable(s) you’re exploring are indeed factors, you should:
-
 For exercise 2, I will stick to the gapminder as my dataset and `continent` as the variable for the factor management.
 
 Let's take a look at the `continent`:
@@ -49,7 +47,7 @@ We can see that `continent` is indeed a factor that have five levels.
 
 ### 1. Drop factor / levels;
 
-To drop all the data of the Oceania from the gapminder, We can use `filter()` and drop the unused level by `droplevels()`:
+To drop all the data of the Oceania from the gapminder, We can use `filter()` and drop the unused levesl by `droplevels()`:
 
 ```{r}
 filtered_gapminder<- gapminder %>% 
@@ -119,12 +117,12 @@ reordered
 
 # Exercise 3: File input/output (I/O)
 
-### Task: Experiment with at least one of:
-* ###  write_csv()/read_csv() (and/or TSV friends),
-* ### saveRDS()/readRDS(),
-* ### dput()/dget().
+#### Task: Experiment with at least one of:
+* ####  write_csv()/read_csv() (and/or TSV friends),
+* #### saveRDS()/readRDS(),
+* #### dput()/dget().
 
-### You are expected to create something new, probably by filtering or grouped-summarization of your dataset (for e.g., Singer, Gapminder, or another dataset), export it to disk and then reload it back in using one of the packages above. You should use here::here() for reading in and writing out. With the imported data, play around with factor levels and use factors to order your data with one of your factors (i.e. non-alphabetically). For the I/O method(s) you chose, comment on whether or not your newly created file survived the round trip of writing to file then reading back in.
+#### You are expected to create something new, probably by filtering or grouped-summarization of your dataset (for e.g., Singer, Gapminder, or another dataset), export it to disk and then reload it back in using one of the packages above. You should use here::here() for reading in and writing out. With the imported data, play around with factor levels and use factors to order your data with one of your factors (i.e. non-alphabetically). For the I/O method(s) you chose, comment on whether or not your newly created file survived the round trip of writing to file then reading back in.
 
 Here I am going to create a new dataset that has the mean life expectancy of all the countries in Asia and reorder by the mean life expectancy:
 ```{r}
@@ -149,11 +147,14 @@ Let's reload the something_new file back:
 
 ```{r}
 reload_gap <- read_csv(here::here("HW_05","something_new.csv"))
+DT::datatable(reload_gap)
 ```
 
 
+Here I use `write_csv()` and `read_csv()` function and the read-back file is exact the same as the write-in file. 
+
 # Exercise 4: Visualization design
-###  Task: Create a side-by-side plot and juxtapose your first attempt (show the original figure as-is) with a revised attempt after some time spent working on it and implementing principles of effective plotting principles. Comment and reflect on the differences.
+####  Task: Create a side-by-side plot and juxtapose your first attempt (show the original figure as-is) with a revised attempt after some time spent working on it and implementing principles of effective plotting principles. Comment and reflect on the differences.
 
 
 ```{r}
@@ -179,7 +180,7 @@ In the upper plot(original), the gdp per capita distribution for each continent 
 
 
 # Exercise 5: Writing figures to file
-### Task: Use <span style="color:red">ggsave()</span> to explicitly save a plot to file. Include the exported plot as part of your repository and assignment.
+#### Task: Use <span style="color:red">ggsave()</span> to explicitly save a plot to file. Include the exported plot as part of your repository and assignment.
 
 
 ```{r}
@@ -187,7 +188,7 @@ ggsave(here::here("HW_05","gdpPercap_each_continent_new.png"), plot = new, width
 ggsave(here::here("HW_05","gdpPercap_each_continent_original.png"), plot = original, width = 4, height = 4, scale = 1)
 ```
 
-### Then, use <span style="color:red">![Alt text] (/path/to/img.png) </span> to load and embed that file into your report. You can play around with various options, such as:
+#### Then, use <span style="color:red">![Alt text] (/path/to/img.png) </span> to load and embed that file into your report. You can play around with various options, such as:
 
 
 ![Loading the exported image](gdpPercap_each_continent_original.png)

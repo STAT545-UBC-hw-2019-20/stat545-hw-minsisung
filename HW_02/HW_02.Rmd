@@ -97,9 +97,10 @@ gapminder %>%
 The distribution of the gdpPercap of each continent
 ```{r, warning=FALSE, echo=FALSE}
 gapminder %>% 
-  ggplot(aes(x=log(gdpPercap)))+ 
+  ggplot(aes(x=gdpPercap))+ 
   geom_density()+ #Plot density
-    facet_wrap(~continent) #plot the density side by side
+  scale_x_log10()+
+  facet_wrap(~continent) #plot the density side by side
 ```
 
 
