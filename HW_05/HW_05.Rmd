@@ -106,15 +106,6 @@ reordered
 ```
 
 
-
-```{r}
-
-
-```
-
-
-
-
 # Exercise 3: File input/output (I/O)
 
 #### Task: Experiment with at least one of:
@@ -190,7 +181,11 @@ ggsave(here::here("HW_05","gdpPercap_each_continent_original.png"), plot = origi
 
 #### Then, use <span style="color:red">![Alt text] (/path/to/img.png) </span> to load and embed that file into your report. You can play around with various options, such as:
 
-
+` ![Loading the exported image](gdpPercap_each_continent_original.png) `
 ![Loading the exported image](gdpPercap_each_continent_original.png)
+` ![Loading the exported image](gdpPercap_each_continent_new.png)`
 
 ![Loading the exported image](gdpPercap_each_continent_new.png)
+
+
+
